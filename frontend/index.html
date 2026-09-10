@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nexus | Autonomous Agent Orchestration</title>
+    <style>
+      :root {
+        --bg-primary: #0a0a0c;
+        --bg-secondary: #121216;
+        --accent-gold: #d4af37;
+        --accent-glow: rgba(212, 175, 55, 0.15);
+        --text-primary: #f5f5f7;
+        --text-secondary: #a1a1aa;
+        --glass-bg: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.08);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+      }
+
+      body {
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        overflow-x: hidden;
+        line-height: 1.6;
+      }
+
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        background: radial-gradient(
+          circle at 50% 50%,
+          var(--accent-glow) 0%,
+          transparent 50%
+        );
+      }
+
+      .hero-content {
+        text-align: center;
+        max-width: 900px;
+        padding: 2rem;
+        z-index: 2;
+      }
+
+      h1 {
+        font-size: clamp(3rem, 8vw, 6rem);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        background: linear-gradient(
+          135deg,
+          #ffffff 0%,
+          var(--accent-gold) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        transform: translate3d(0, 30px, 0);
+        animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      .subtitle {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        margin-bottom: 3rem;
+        opacity: 0;
+        transform: translate3d(0, 30px, 0);
+        animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+      }
+
+      .cta-container {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        opacity: 0;
+        transform: translate3d(0, 30px, 0);
+        animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+      }
+
+      .btn {
+        padding: 1rem 2.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        text-decoration: none;
+        border: 1px solid var(--glass-border);
+      }
+
+      .btn-primary {
+        background: var(--accent-gold);
+        color: var(--bg-primary);
+        border: none;
+      }
+
+      .btn-primary:hover {
+        transform: translate3d(0, -2px, 0);
+        box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.5);
+      }
+
+      .btn-secondary {
+        background: var(--glass-bg);
+        color: var(--text-primary);
+        backdrop-filter: blur(12px);
+      }
+
+      .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .features {
+        padding: 8rem 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .feature-card {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        backdrop-filter: blur(20px);
+        transition:
+          transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+          border-color 0.4s ease;
+        opacity: 0;
+        transform: translate3d(0, 40px, 0);
+      }
+
+      .feature-card.visible {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+
+      .feature-card:hover {
+        transform: translate3d(0, -8px, 0);
+        border-color: var(--accent-gold);
+      }
+
+      .feature-icon {
+        width: 48px;
+        height: 48px;
+        background: var(--accent-glow);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        color: var(--accent-gold);
+        font-size: 1.5rem;
+      }
+
+      .feature-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .feature-desc {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+      }
+
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+        }
+      }
+
+      .grid-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 50px 50px;
+        z-index: 1;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="hero">
+      <div class="grid-bg"></div>
+      <div class="hero-content">
+        <h1>Autonomous Intelligence</h1>
+        <p class="subtitle">
+          Deploy, manage, and scale AI agents with enterprise-grade
+          infrastructure. Context-aware, fully autonomous, and built for
+          high-stakes environments.
+        </p>
+        <div class="cta-container">
+          <a href="#" class="btn btn-primary">Initialize Deployment</a>
+          <a href="#" class="btn btn-secondary">View Architecture</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="feature-card">
+        <div class="feature-icon">◈</div>
+        <h3 class="feature-title">Persistent Memory</h3>
+        <p class="feature-desc">
+          Externalized state management and vector databases ensure continuous
+          context retention across multi-turn interactions.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">◉</div>
+        <h3 class="feature-title">Dynamic Tool Use</h3>
+        <p class="feature-desc">
+          Agents autonomously query external APIs, parse JSON payloads, and
+          execute actions based on real-time environmental inputs.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">◆</div>
+        <h3 class="feature-title">Polyglot Backend</h3>
+        <p class="feature-desc">
+          Microservices architecture utilizing Python for inference, TypeScript
+          for edge routing, and Java for transactional integrity.
+        </p>
+      </div>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const observerOptions = {
+          root: null,
+          rootMargin: "0px",
+          threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, observerOptions);
+
+        const cards = document.querySelectorAll(".feature-card");
+        cards.forEach((card, index) => {
+          card.style.transitionDelay = `${index * 0.1}s`;
+          observer.observe(card);
+        });
+
+        document.querySelectorAll(".btn").forEach((btn) => {
+          btn.addEventListener("mousemove", (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            btn.style.setProperty("--x", `${x}px`);
+            btn.style.setProperty("--y", `${y}px`);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
